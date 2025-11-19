@@ -245,20 +245,32 @@ Cualquier humano que toque la Death Note, aunque no sea su propietario, podrá v
     </div>
 
     <!-- MODELO 3D -->
-    <model-viewer
-      src="assets/models/ryuk.glb"
-      camera-controls
-      shadow-intensity="1"
-      exposure="1.2"
-      disable-zoom="false"
-      ar="false"
-      interaction-prompt="auto"
-      antialias="true"
-      render-scale="1.5"
-    ></model-viewer>
+  <model-viewer
+    src="assets/models/ryuk.glb"
+    shadow-intensity="1"
+    exposure="1.2"
+    ar="false"
+    autoplay
+    antialias="true"
+    render-scale="1.5"
+    camera-controls="false"
+    disable-zoom="true"
+    interaction-prompt="none"
+    style="
+      position:absolute;
+      top:50%;
+      left:40%;
+      transform:translate(-10%, -50%) scale(1.9) rotateX(15deg);
+      width:80vw;
+      height:100vh;
+      z-index:1;
+      pointer-events:none;
+    ">
+  </model-viewer>
   </div>
 
 </body>
 </html>
+
 
 
