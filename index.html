@@ -1,0 +1,262 @@
+<!DOCTYPE html> 
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Death Note</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- model-viewer -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+  <style>
+    /* === FONT DEATH NOTE === */
+    @font-face {
+      font-family: "DeathNoteMain";
+      src: url("assets/fonts/DEATHNOTEFont.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "DeathNotePage";
+      src: url("assets/fonts/DeathNote.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
+      font-family: "DeathNoteMain", serif;
+      background: url("assets/img/paper_texture.jpg");
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.85);
+    }
+    /* === FONT SOLO PER IL TESTO DEL LIBRO === */
+    .riddle-inner,
+    .riddle-inner .riddle-text,
+    .riddle-inner .riddle-footer {
+      font-family: "DeathNotePage", serif !important;
+    }
+
+    /* TITOLO IN ALTO */
+    .overlay-title {
+    position: fixed;
+    top: 60px;          /* 👉 aumenta per scendere */
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 20;
+    }
+
+    .blood-title {
+      font-size: clamp(2.4rem, 5vw, 5rem);
+      color: #ff1a1a;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+
+      /* ▼ EFFETTO 3D / PROFONDITÀ ▼ */
+      text-shadow:
+        /* Strati neri profondi (effetto 3D estruso) */
+        2px 2px 0 #000,
+        4px 4px 0 #000,
+        6px 6px 0 #000,
+        8px 8px 0 #000,
+        10px 10px 0 #000,
+
+        /* Outline spesso */
+        -3px -3px 0 #000,
+        3px -3px 0 #000,
+        -3px 3px 0 #000,
+        3px 3px 0 #000,
+
+        /* Glow rosso demoniaco */
+        0 0 15px rgba(255,0,0,1),
+        0 0 40px rgba(255,0,0,0.9),
+        0 0 80px rgba(255,0,0,0.8);
+    }
+
+
+    /* === CONTENITORE CENTRALE (LIBRO + RYUK) === */
+    .scene {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+      padding: 3rem;
+      min-height: calc(100vh - 6rem); /* sotto al titolo */
+      box-sizing: border-box;
+    }
+
+    /* === LIBRO DEATH NOTE === */
+    .riddle-container {
+      position: relative;
+      width: min(40vw, 450px);
+      margin-top: 150px;
+      margin-right: 500px;
+    }
+
+    .riddle-page {
+      position: relative;
+      width: 100%;
+      box-shadow: 0 35px 80px rgba(0, 0, 0, 0.9);
+      border-radius: 10px;
+      overflow: hidden;
+      transform: rotate(-2deg);
+      transform-origin: center center;
+      background: #000;
+      animation: floatBook 4.5s ease-in-out infinite;
+    }
+    @keyframes floatBook {
+      0%, 100% {
+        transform: rotate(-2deg) translateY(0);
+        box-shadow: 0 35px 80px rgba(0, 0, 0, 0.9);
+      }
+      50% {
+        transform: rotate(-2deg) translateY(-8px);
+        box-shadow: 0 45px 90px rgba(0, 0, 0, 0.7);
+      }
+    }
+    .riddle-page img {
+      display: block;
+      width: 100%;
+      height: auto;
+
+      border-radius: inherit;
+    }
+
+    .riddle-inner {
+      position: absolute;
+      top: 24%;
+      left: 14%;
+      right: 12%;
+      bottom: 14%;
+      color: #ffffff;
+      font-size: clamp(0.75rem, 1.1vw, 1rem);
+      line-height: 1.4;
+      letter-spacing: 0.02em;
+    }
+
+    .riddle-text {
+      white-space: pre-line;
+      overflow: hidden;
+      width: auto;
+    }
+
+    .riddle-footer {
+      margin-top: 0.7rem;
+      font-size: 0.85em;
+      color: #ff0000;
+      text-align: right;
+    }
+
+    /* === RYUK 3D === */
+    model-viewer {
+      position: absolute;          /* libero di muoversi dietro il libro */
+      top: 50%;                    /* centrato verticalmente */
+      left: 40%;                   /* centrato orizzontalmente */
+      transform: translate(-10%, -50%) scale(1.2); 
+      /*          ↑ X spostamento | ↑ Y centrato | ↑ ingrandito */
+
+      width: 80vw;
+      height: 100vh;
+
+      z-index: 1;                  /* ✨ DIETRO IL LIBRO ✨ */
+      pointer-events: none;        /* evita che blocchi click/tocco */
+
+      filter: drop-shadow(0px 0px 60px rgba(252, 89, 89, 0.4));
+    }
+
+    /* 📱 TABLET / SCHERMI MEDI */
+    @media (max-width: 1024px) {
+      .scene {
+        gap: 3vw;
+        padding-top: 2.5rem;
+      }
+      .riddle-container {
+        width: min(45vw, 420px);
+      }
+      model-viewer {
+        width: min(45vw, 480px);
+        height: 60vh;
+      }
+    }
+
+    /* 📱 MOBILE */
+    @media (max-width: 900px) {
+      body {
+        overflow-y: auto;
+      }
+
+      .scene {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 1.5rem 5vw 2.5rem;
+        min-height: auto;
+      }
+
+      .riddle-container {
+        width: 85vw;
+      }
+
+      .riddle-inner {
+        font-size: clamp(0.8rem, 3.2vw, 1rem);
+      }
+
+      model-viewer {
+        width: 90vw;
+        height: 55vh;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TITOLO -->
+  <div class="overlay-title">
+    <div class="blood-title">DEATH NOTE</div>
+  </div>
+
+  <!-- SCENA CENTRALE: LIBRO + RYUK -->
+  <div class="scene">
+    <!-- PAGINA DEATH NOTE CON ACERTIJO -->
+    <div class="riddle-container">
+      <div class="riddle-page">
+        <img src="assets/img/deathnote_page.jpg" alt="Death Note page">
+        <div class="riddle-inner">
+          <div class="riddle-text">
+Las personas cuyos nombres estén escritos en esta libreta, morirán. 
+Esta libreta no funcionará a menos que el escritor tenga el rostro de la persona en su mente mientras escribe el nombre. Por lo tanto, personas que comparten el mismo nombre no se verán afectadas. 
+El propietario de la libreta podrá ver y escuchar al Shinigami que era su propietario original. 
+El humano que utilice la libreta no podrá ir al Cielo ni al Infierno. 
+Cualquier humano que toque la Death Note, aunque no sea su propietario, podrá ver y escuchar al Shinigami que era su propietario original. 
+          </div>
+          <div class="riddle-footer">
+— Sabias que...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODELO 3D -->
+    <model-viewer
+      src="assets/models/ryuk.glb"
+      camera-controls
+      auto-rotate
+      rotation-per-second="25deg"
+      shadow-intensity="1"
+      exposure="1.2"
+      disable-zoom="false"
+      ar="false"
+      interaction-prompt="none"
+    ></model-viewer>
+  </div>
+
+</body>
+</html>
