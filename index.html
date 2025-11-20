@@ -102,7 +102,7 @@
       animation: floatBook 4.5s ease-in-out infinite;
       cursor: pointer;
     }
-
+    
     @keyframes floatBook {
       0%, 100% {
         transform: rotate(-2deg) translateY(0);
@@ -137,6 +137,11 @@
     .riddle-text {
       white-space: pre-line;
       overflow: hidden;
+    }
+        
+    img {
+      user-select: none;
+      -webkit-user-drag: none;
     }
 
     .riddle-footer {
@@ -238,7 +243,7 @@
             El humano que emplee esta libreta
             quedara para siempre excluido
             del Cielo y del Infierno.
-
+            
           </div>
           <div class="riddle-footer">— Sabias que...</div>
         </div>
@@ -260,31 +265,63 @@
 
   </div>
 
-  <!-- SCRIPT SIMPLIFICADO -->
+  <!-- AUDIO -->
+  <audio id="bg-music" src="assets/audio/deathnote_theme.mp3" loop></audio>
+  <audio id="ryuk-laugh" src="assets/audio/ryuk_laugh.mp3"></audio>
+
+  <!-- SCRIPT CON MUSICA + RISATA + DOWNLOAD -->
   <script>
     const book = document.querySelector(".riddle-page");
     const ryuk = document.querySelector("model-viewer");
+    const music = document.getElementById("bg-music");
+    const laugh = document.getElementById("ryuk-laugh");
+
+    // Funzione per il fade-in della musica
+    function fadeInAudio(audio, targetVolume = 0.7, step = 0.03, interval = 100) {
+      audio.volume = 0;
+      let v = 0;
+      const fade = setInterval(() => {
+        v += step;
+        if (v >= targetVolume) {
+          v = targetVolume;
+          clearInterval(fade);
+        }
+        audio.volume = v;
+      }, interval);
+    }
 
     book.addEventListener("click", (event) => {
       event.stopPropagation();
       ryuk.classList.add("show");
+
+      // Avvia la musica con fade-in
+      music.play()
+        .then(() => {
+          fadeInAudio(music, 0.7, 0.03, 100);
+        })
+        .catch(e => {
+          console.log("Autoplay bloccato dal browser finche l'utente non interagisce pienamente:", e);
+        });
     });
 
     ryuk.addEventListener("click", (event) => {
       event.stopPropagation();
-      
-      // Crear un enlace temporal para la descarga
-      const downloadLink = document.createElement('a');
-      downloadLink.href = 'Death-Note.zip';
-      downloadLink.download = 'Death-Note.zip';
-      
-      // Simular clic en el enlace
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
+
+      // Risata di Ryuk
+      laugh.currentTime = 0;
+      laugh.play().catch(e => console.log("Impossibile riprodurre la risata:", e));
+
+      // Download del file zip dopo un piccolo delay
+      setTimeout(() => {
+        const downloadLink = document.createElement('a');
+        downloadLink.href = 'Death-Note.zip';
+        downloadLink.download = 'Death-Note.zip';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+      }, 800); // 0.8 secondi
     });
   </script>
 
 </body>
 </html>
-
