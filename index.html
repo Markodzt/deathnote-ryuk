@@ -88,6 +88,7 @@
       width: min(50vw, 550px);
       margin-top: 150px;
       margin-right: 500px;
+      z-index: 10;
     }
 
     .riddle-page {
@@ -151,22 +152,18 @@
       left: 40%;
       width: 80vw;
       height: 100vh;
-      z-index: 1;
-      /* Habilitamos eventos de puntero para poder hacer clic */
+      z-index: 5;
       pointer-events: none;
       filter: drop-shadow(0px 0px 60px rgba(252, 89, 89, 0.4));
 
-      /* Oculto por defecto */
       opacity: 0;
       transform: translate(-10%, -50%) scale(0.4);
       transition: opacity 1.3s ease, transform 1.3s ease;
     }
 
-    /* Cuando aparece */
     model-viewer.show {
       opacity: 1;
       transform: translate(-10%, -50%) scale(1.2);
-      /* Habilitamos el clic solo cuando está visible */
       pointer-events: auto;
       cursor: pointer;
     }
@@ -249,16 +246,19 @@
 
   </div>
 
-  <!-- SCRIPT PARA APARICIÓN DE RYUK Y DESCARGA -->
+  <!-- SCRIPT SIMPLIFICADO -->
   <script>
     const book = document.querySelector(".riddle-page");
     const ryuk = document.querySelector("model-viewer");
 
-    book.addEventListener("click", () => {
+    book.addEventListener("click", (event) => {
+      event.stopPropagation();
       ryuk.classList.add("show");
     });
 
-    ryuk.addEventListener("click", () => {
+    ryuk.addEventListener("click", (event) => {
+      event.stopPropagation();
+      
       // Crear un enlace temporal para la descarga
       const downloadLink = document.createElement('a');
       downloadLink.href = 'Death-Note.zip';
