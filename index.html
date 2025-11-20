@@ -85,7 +85,7 @@
 
     .riddle-container {
       position: relative;
-      width: min(50vw, 550px);
+      width: min(60vw, 650px);
       margin-top: 150px;
       margin-right: 500px;
       z-index: 10;
@@ -128,9 +128,10 @@
       right: 10%;
       bottom: 12%;
       color: #ffffff;
-      font-size: clamp(0.95rem, 1.4vw, 1.3rem);
-      line-height: 1.5;
-      letter-spacing: 0.03em;
+      font-size: clamp(1.5rem, 1.55vw, 1.45rem);
+      line-height: 1.65;
+      letter-spacing: 0.04em;
+      text-shadow: 0 0 4px rgba(0,0,0,0.75);
     }
 
     .riddle-text {
@@ -140,9 +141,10 @@
 
     .riddle-footer {
       margin-top: 1rem;
-      font-size: 1em;
+      font-size:clamp(1.4rem,2vw,2rem);
       color: #ff0000;
       text-align: right;
+      text-shadow: 0 0 6px rgba(255,0,0,0.8);
     }
 
     /* === RYUK 3D ANIMACIÓN DE APARICIÓN === */
@@ -163,7 +165,7 @@
 
     model-viewer.show {
       opacity: 1;
-      transform: translate(-10%, -50%) scale(1.2);
+      transform: translate(-10%, -50%) scale(1.4);
       pointer-events: auto;
       cursor: pointer;
     }
@@ -220,13 +222,25 @@
         <img src="assets/img/deathnote_page.jpg" alt="Death Note page">
         <div class="riddle-inner">
           <div class="riddle-text">
-            Cualquier humano que toque la Death Note, aunque no sea su propietario, podrá ver y escuchar al Shinigami que era su propietario original.
-            Las personas cuyos nombres estén escritos en esta libreta, morirán. 
-            El propietario de la libreta podrá ver y escuchar al Shinigami que era su propietario original. 
-            Esta libreta no funcionará a menos que el escritor tenga el rostro de la persona en su mente mientras escribe el nombre. Por lo tanto, personas que comparten el mismo nombre no se verán afectadas. 
-            El humano que utilice la libreta no podrá ir al Cielo ni al Infierno. 
+            Quien ose tocar la Death Note,
+            sea o no su dueno,
+            despertara la vision maldita:
+            el Shinigami original aparecerá
+            ante sus ojos.
+            Todo nombre trazado en estas paginas
+            sellará un destino:
+            la muerte inevitable del portador.
+            La libreta solo obedece
+            cuando el escritor invoca en su mente
+            el rostro verdadero de la víctima.
+            Los nombres iguales
+            no engañaran a la muerte.
+            El humano que emplee esta libreta
+            quedara para siempre excluido
+            del Cielo y del Infierno.
+
           </div>
-          <div class="riddle-footer">— Sabías que...</div>
+          <div class="riddle-footer">— Sabias que...</div>
         </div>
       </div>
     </div>
@@ -273,3 +287,4 @@
 
 </body>
 </html>
+
