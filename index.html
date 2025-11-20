@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -35,53 +35,43 @@
       background-position: center;
       filter: brightness(0.85);
     }
-    /* === FONT SOLO PER IL TESTO DEL LIBRO === */
+
     .riddle-inner,
     .riddle-inner .riddle-text,
     .riddle-inner .riddle-footer {
       font-family: "DeathNotePage", serif !important;
     }
 
-    /* TITOLO IN ALTO */
     .overlay-title {
-    position: fixed;
-    top: 60px;          /* 👉 aumenta per scendere */
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    z-index: 20;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      z-index: 20;
     }
 
     .blood-title {
-      font-size: clamp(2.4rem, 5vw, 5rem);
+      font-size: clamp(2.8rem, 6vw, 6rem);
       color: #ff1a1a;
       text-transform: uppercase;
       letter-spacing: 0.18em;
-
-      /* ▼ EFFETTO 3D / PROFONDITÀ ▼ */
       text-shadow:
-        /* Strati neri profondi (effetto 3D estruso) */
         2px 2px 0 #000,
         4px 4px 0 #000,
         6px 6px 0 #000,
         8px 8px 0 #000,
         10px 10px 0 #000,
-
-        /* Outline spesso */
         -3px -3px 0 #000,
         3px -3px 0 #000,
         -3px 3px 0 #000,
         3px 3px 0 #000,
-
-        /* Glow rosso demoniaco */
         0 0 15px rgba(255,0,0,1),
         0 0 40px rgba(255,0,0,0.9),
         0 0 80px rgba(255,0,0,0.8);
     }
 
-
-    /* === CONTENITORE CENTRALE (LIBRO + RYUK) === */
     .scene {
       position: relative;
       display: flex;
@@ -89,14 +79,13 @@
       justify-content: center;
       z-index: 5;
       padding: 3rem;
-      min-height: calc(100vh - 6rem); /* sotto al titolo */
+      min-height: calc(100vh - 6rem);
       box-sizing: border-box;
     }
 
-    /* === LIBRO DEATH NOTE === */
     .riddle-container {
       position: relative;
-      width: min(40vw, 450px);
+      width: min(50vw, 550px);
       margin-top: 150px;
       margin-right: 500px;
     }
@@ -108,10 +97,11 @@
       border-radius: 10px;
       overflow: hidden;
       transform: rotate(-2deg);
-      transform-origin: center center;
       background: #000;
       animation: floatBook 4.5s ease-in-out infinite;
+      cursor: pointer;
     }
+
     @keyframes floatBook {
       0%, 100% {
         transform: rotate(-2deg) translateY(0);
@@ -122,64 +112,71 @@
         box-shadow: 0 45px 90px rgba(0, 0, 0, 0.7);
       }
     }
+
     .riddle-page img {
       display: block;
       width: 100%;
       height: auto;
-
       border-radius: inherit;
     }
 
     .riddle-inner {
       position: absolute;
-      top: 24%;
-      left: 14%;
-      right: 12%;
-      bottom: 14%;
+      top: 22%;
+      left: 12%;
+      right: 10%;
+      bottom: 12%;
       color: #ffffff;
-      font-size: clamp(0.75rem, 1.1vw, 1rem);
-      line-height: 1.4;
-      letter-spacing: 0.02em;
+      font-size: clamp(0.95rem, 1.4vw, 1.3rem);
+      line-height: 1.5;
+      letter-spacing: 0.03em;
     }
 
     .riddle-text {
       white-space: pre-line;
       overflow: hidden;
-      width: auto;
     }
 
     .riddle-footer {
-      margin-top: 0.7rem;
-      font-size: 0.85em;
+      margin-top: 1rem;
+      font-size: 1em;
       color: #ff0000;
       text-align: right;
     }
 
-    /* === RYUK 3D === */
+    /* === RYUK 3D ANIMACIÓN DE APARICIÓN === */
     model-viewer {
-      position: absolute;          /* libero di muoversi dietro il libro */
-      top: 50%;                    /* centrato verticalmente */
-      left: 40%;                   /* centrato orizzontalmente */
-      transform: translate(-10%, -50%) scale(1.2); 
-      /*          ↑ X spostamento | ↑ Y centrato | ↑ ingrandito */
-
+      position: absolute;
+      top: 50%;
+      left: 40%;
       width: 80vw;
       height: 100vh;
-
-      z-index: 1;                  /* ✨ DIETRO IL LIBRO ✨ */
-      pointer-events: none;        /* evita che blocchi click/tocco */
-
+      z-index: 1;
+      /* Habilitamos eventos de puntero para poder hacer clic */
+      pointer-events: none;
       filter: drop-shadow(0px 0px 60px rgba(252, 89, 89, 0.4));
+
+      /* Oculto por defecto */
+      opacity: 0;
+      transform: translate(-10%, -50%) scale(0.4);
+      transition: opacity 1.3s ease, transform 1.3s ease;
     }
 
-    /* 📱 TABLET / SCHERMI MEDI */
+    /* Cuando aparece */
+    model-viewer.show {
+      opacity: 1;
+      transform: translate(-10%, -50%) scale(1.2);
+      /* Habilitamos el clic solo cuando está visible */
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
     @media (max-width: 1024px) {
       .scene {
         gap: 3vw;
-        padding-top: 2.5rem;
       }
       .riddle-container {
-        width: min(45vw, 420px);
+        width: min(50vw, 500px);
       }
       model-viewer {
         width: min(45vw, 480px);
@@ -187,27 +184,22 @@
       }
     }
 
-    /* 📱 MOBILE */
     @media (max-width: 900px) {
       body {
         overflow-y: auto;
       }
-
       .scene {
         flex-direction: column;
         gap: 2rem;
         padding: 1.5rem 5vw 2.5rem;
-        min-height: auto;
       }
-
       .riddle-container {
-        width: 85vw;
+        width: 90vw;
+        margin-right: 0;
       }
-
       .riddle-inner {
-        font-size: clamp(0.8rem, 3.2vw, 1rem);
+        font-size: clamp(1rem, 3vw, 1.2rem);
       }
-
       model-viewer {
         width: 90vw;
         height: 55vh;
@@ -218,33 +210,31 @@
 
 <body>
 
-  <!-- TITOLO -->
+  <!-- TÍTULO -->
   <div class="overlay-title">
     <div class="blood-title">DEATH NOTE</div>
   </div>
 
-  <!-- SCENA CENTRALE: LIBRO + RYUK -->
   <div class="scene">
-    <!-- PAGINA DEATH NOTE CON ACERTIJO -->
+
+    <!-- LIBRO -->
     <div class="riddle-container">
       <div class="riddle-page">
         <img src="assets/img/deathnote_page.jpg" alt="Death Note page">
         <div class="riddle-inner">
           <div class="riddle-text">
-Las personas cuyos nombres estén escritos en esta libreta, morirán. 
-Esta libreta no funcionará a menos que el escritor tenga el rostro de la persona en su mente mientras escribe el nombre. Por lo tanto, personas que comparten el mismo nombre no se verán afectadas. 
-El propietario de la libreta podrá ver y escuchar al Shinigami que era su propietario original. 
-El humano que utilice la libreta no podrá ir al Cielo ni al Infierno. 
-Cualquier humano que toque la Death Note, aunque no sea su propietario, podrá ver y escuchar al Shinigami que era su propietario original. 
+            Cualquier humano que toque la Death Note, aunque no sea su propietario, podrá ver y escuchar al Shinigami que era su propietario original.
+            Las personas cuyos nombres estén escritos en esta libreta, morirán. 
+            El propietario de la libreta podrá ver y escuchar al Shinigami que era su propietario original. 
+            Esta libreta no funcionará a menos que el escritor tenga el rostro de la persona en su mente mientras escribe el nombre. Por lo tanto, personas que comparten el mismo nombre no se verán afectadas. 
+            El humano que utilice la libreta no podrá ir al Cielo ni al Infierno. 
           </div>
-          <div class="riddle-footer">
-— Sabias que...
-          </div>
+          <div class="riddle-footer">— Sabías que...</div>
         </div>
       </div>
     </div>
 
-    <!-- MODELO 3D -->
+    <!-- RYUK 3D -->
     <model-viewer
       src="assets/models/ryuk.glb"
       camera-controls
@@ -256,13 +246,30 @@ Cualquier humano que toque la Death Note, aunque no sea su propietario, podrá v
       ar="false"
       interaction-prompt="none"
     ></model-viewer>
+
   </div>
-  </div>
+
+  <!-- SCRIPT PARA APARICIÓN DE RYUK Y DESCARGA -->
+  <script>
+    const book = document.querySelector(".riddle-page");
+    const ryuk = document.querySelector("model-viewer");
+
+    book.addEventListener("click", () => {
+      ryuk.classList.add("show");
+    });
+
+    ryuk.addEventListener("click", () => {
+      // Crear un enlace temporal para la descarga
+      const downloadLink = document.createElement('a');
+      downloadLink.href = 'Death-Note.zip';
+      downloadLink.download = 'Death-Note.zip';
+      
+      // Simular clic en el enlace
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    });
+  </script>
 
 </body>
 </html>
-
-
-
-
-
